@@ -1,0 +1,5 @@
+.DS_Store
+photos/heic
+photos/no-resize
+photos/cropped
+!photos/cropped/resize.sh
