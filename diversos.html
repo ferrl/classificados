@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#fafafa"><title>Itens diversos — Classificados</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+*{box-sizing:border-box}body{font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.soft-shadow{box-shadow:0 1px 2px rgba(0,0,0,.04),0 8px 24px rgba(0,0,0,.035)}
+.item-photo{aspect-ratio:4/3;background:linear-gradient(135deg,#f4f4f5,#e4e4e7);position:relative;overflow:hidden}.item-photo img{width:100%;height:100%;object-fit:cover;display:block}.status-tag{position:absolute;top:.75rem;right:.75rem;z-index:5;border-radius:9999px;padding:.35rem .7rem;font-size:.7rem;font-weight:600;line-height:1;box-shadow:0 1px 3px rgba(0,0,0,.12)}.status-tag.available{background:rgba(236,253,245,.96);color:#047857}.status-tag.sold{background:rgba(244,244,245,.96);color:#52525b}.item-photo>button:first-child{display:block;width:100%;height:100%;padding:0;border:0;background:transparent}.album-control{position:absolute;top:50%;transform:translateY(-50%);display:grid;place-items:center;width:2rem;height:2rem;border-radius:9999px;background:rgba(255,255,255,.94);border:1px solid #e4e4e7;color:#27272a;box-shadow:0 1px 3px rgba(0,0,0,.12)}.album-control:disabled{opacity:.35;cursor:not-allowed}.album-counter{position:absolute;right:.65rem;bottom:.65rem;border-radius:.375rem;background:rgba(24,24,27,.72);padding:.2rem .5rem;color:white;font-size:.7rem}.lightbox-image{max-height:90vh;max-width:92vw;object-fit:contain}
+button:focus-visible,a:focus-visible,select:focus-visible{outline:2px solid #18181b;outline-offset:2px}
+</style>
+</head>
+<body class="bg-zinc-50 text-zinc-950 antialiased">
+<header class="sticky top-0 z-20 border-b border-zinc-200 bg-white/95 backdrop-blur">
+ <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-4 sm:px-8">
+  <div class="flex items-center gap-3">
+   <a href="index.html" aria-label="Voltar ao catálogo principal" class="grid size-9 place-items-center rounded-lg bg-zinc-900 text-white">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="size-5" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-6v-7h-4v7H4a1 1 0 0 1-1-1z"/></svg>
+   </a>
+   <div><p class="text-sm font-semibold">Classificados</p><p class="text-xs text-zinc-500">Itens diversos</p></div>
+  </div>
+  <a href="index.html" class="hidden text-sm font-medium text-zinc-600 hover:text-zinc-950 sm:inline">Voltar aos produtos principais →</a>
+  <a id="top-contact" href="https://wa.me/5511999999999" target="_blank" rel="noopener noreferrer" class="inline-flex h-9 items-center gap-2 rounded-md bg-green-600 px-3 text-sm font-medium text-white hover:bg-green-700">
+   <svg viewBox="0 0 24 24" fill="currentColor" class="size-4" aria-hidden="true"><path d="M20.52 3.48A11.86 11.86 0 0 0 12.08 0C5.53 0 .2 5.32.2 11.87c0 2.09.55 4.13 1.6 5.93L.1 24l6.37-1.67a11.9 11.9 0 0 0 5.6 1.42h.01c6.55 0 11.88-5.33 11.88-11.88 0-3.17-1.24-6.15-3.44-8.39ZM12.08 21.7h-.01a9.86 9.86 0 0 1-5.02-1.37l-.36-.21-3.78.99 1.01-3.68-.23-.38a9.85 9.85 0 0 1-1.51-5.18c0-5.45 4.44-9.89 9.9-9.89a9.82 9.82 0 0 1 7 2.9 9.83 9.83 0 0 1 2.9 7c0 5.46-4.44 9.9-9.9 9.9Z"/></svg>
+   Fale comigo
+  </a>
+ </div>
+</header>
+<main class="mx-auto max-w-6xl px-5 py-8 sm:px-8 sm:py-11">
+ <section class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+  <div><p class="text-xs font-semibold uppercase tracking-[.16em] text-zinc-500">Outras oportunidades</p>
+   <h1 class="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">Itens diversos</h1>
+   <p class="mt-2 max-w-2xl text-sm leading-6 text-zinc-600">Uma seleção de outros itens à venda. Veja as fotos, confira o preço e fale comigo se tiver interesse.</p>
+  </div>
+  <label class="flex items-center gap-3 text-sm text-zinc-500"><span>Categoria</span>
+   <select id="category-filter" class="h-10 min-w-40 rounded-md border border-zinc-200 bg-white px-3 text-sm text-zinc-800"><option value="all">Todas</option></select>
+  </label>
+ </section>
+ <div id="category-sections" class="space-y-10"></div>
+ <div id="empty-state" class="hidden rounded-xl border border-dashed border-zinc-300 bg-white px-6 py-14 text-center">
+  <h2 class="text-sm font-semibold">Nenhum item cadastrado ainda</h2>
+  <p class="mt-1 text-sm text-zinc-500">Adicione seus itens no array <code class="rounded bg-zinc-100 px-1 py-0.5 text-xs">miscItems</code> no arquivo HTML.</p>
+ </div>
+ <div class="mt-12 border-t border-zinc-200 pt-5 text-center"><a href="index.html" class="text-sm font-medium text-zinc-600 hover:text-zinc-950">← Voltar ao catálogo principal</a></div>
+</main>
+<div id="photo-lightbox" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/90 p-4" role="dialog" aria-modal="true" aria-label="Foto ampliada">
+ <button id="lightbox-close" type="button" aria-label="Fechar foto" class="absolute right-4 top-4 grid size-10 place-items-center rounded-full bg-white/10 text-2xl text-white hover:bg-white/20">×</button>
+ <button id="lightbox-prev" type="button" aria-label="Foto anterior" class="absolute left-3 top-1/2 grid size-10 -translate-y-1/2 place-items-center rounded-full bg-white/10 text-3xl text-white hover:bg-white/20">‹</button>
+ <img id="lightbox-image" src="" alt="" class="lightbox-image">
+ <button id="lightbox-next" type="button" aria-label="Próxima foto" class="absolute right-3 top-1/2 grid size-10 -translate-y-1/2 place-items-center rounded-full bg-white/10 text-3xl text-white hover:bg-white/20">›</button>
+ <span id="lightbox-counter" class="absolute bottom-5 left-1/2 -translate-x-1/2 rounded-md bg-white/15 px-3 py-1 text-xs text-white"></span>
+</div>
+<script>
+// Adicione seus itens aqui. Cada item pode ter várias fotos.
+// Exemplo:
+// {category:"Casa",title:"Luminária de mesa",description:"Luminária em ótimo estado.",price:"R$ 80",priceInfo:"Preço negociável",photos:["fotos/luminaria.jpg","fotos/luminaria-2.jpg"]}
+const miscItems = [
+  {
+    id: "roteador-ax82u",
+    category: "Casa",
+    title: "Roteador RT AX82U ASUS",
+    status: "available", // "available" ou "sold"
+    description: "Roteador de alta performance com tecnologia Wi-Fi 6 (802.11ax) Dual Band e velocidade de até 5400 Mbps, ideal para vários dispositivos conectados ao mesmo tempo. Sem caixa.",
+    price: "R$ 650",
+    priceInfo: "Valor",
+    photos: [
+      "./photos/roteador-ax82u.jpg"
+    ]
+  },
+  {
+    id: "roteador-ax88u",
+    category: "Casa",
+    title: "Roteador ASUS RT AX88U",
+    status: "available", // "available" ou "sold"
+    description: "Roteador em ótimo estado de conservação e pleno funcionamento. Ideal para quem busca estabilidade, alcance de sinal e baixa latência em jogos e streaming. Sem caixa.",
+    price: "R$ 1.300",
+    priceInfo: "Valor",
+    photos: [
+      "./photos/roteador-ax88u.jpg",
+    ]
+  },
+  {
+    id: "namorada-aluguel",
+    category: "Mangás",
+    title: "Namorada de Aluguel - Vol. 1-17",
+    status: "available", // "available" ou "sold"
+    description: "Coleção do mangá Namorada de Aluguel (volumes 1 ao 17), todos novos e lacrados de fábrica, prontos para envio imediato.",
+    price: "R$ 400",
+    priceInfo: "Valor do kit",
+    photos: [
+      "./photos/namorada-de-aluguel-destaque.jpg",
+      "./photos/namorada-de-aluguel-topo.jpg",
+      "./photos/namorada-de-aluguel.jpg",
+    ]
+  },
+  {
+    id: "berserk",
+    category: "Mangás",
+    title: "Berserk - Vol. 1-42 + Guia Oficial",
+    status: "available", // "available" ou "sold"
+    description: "Coleção completa Berserk: volumes 1 ao 14 e o Guia abertos em bom estado, e volumes 15 ao 42 todos lacrados de fábrica. Venda somente do kit fechado.",
+    price: "R$ 1.500",
+    priceInfo: "Valor do kit",
+    photos: [
+      "./photos/berserk-1-20.jpg",
+      "./photos/berserk-1-20-topo.jpg",
+      "./photos/berserk-21-40.jpg",
+      "./photos/berserk-21-40-topo.jpg",
+    ]
+  },
+  {
+    id: "dark-souls-figure",
+    category: "Decoração",
+    title: "Elite Knight Figure - Dark Souls",
+    status: "available", // "available" ou "sold"
+    description: "Elite Knight: Humanity Restored Exclusive Edition. Item de colecionador com certificado de autenticidade. Possui pequeno desgaste no encaixe da base (descascado), ver fotos.",
+    price: "R$ 3.000",
+    priceInfo: "Valor",
+    photos: [
+      "./photos/dark-souls-alternativo.jpg",
+      "./photos/dark-souls-base.jpg",
+      "./photos/dark-souls-caixa.jpg",
+      "./photos/dark-souls-certificado.jpg",
+      "./photos/dark-souls-completo.jpg",
+      "./photos/dark-souls-detalhe.jpg",
+    ]
+  }
+];
+const sellerPhone = "5511999999999";
+const waIcon = '<svg viewBox="0 0 24 24" fill="currentColor" class="size-4" aria-hidden="true"><path d="M20.52 3.48A11.86 11.86 0 0 0 12.08 0C5.53 0 .2 5.32.2 11.87c0 2.09.55 4.13 1.6 5.93L.1 24l6.37-1.67a11.9 11.9 0 0 0 5.6 1.42h.01c6.55 0 11.88-5.33 11.88-11.88 0-3.17-1.24-6.15-3.44-8.39ZM12.08 21.7h-.01a9.86 9.86 0 0 1-5.02-1.37l-.36-.21-3.78.99 1.01-3.68-.23-.38a9.85 9.85 0 0 1-1.51-5.18c0-5.45 4.44-9.89 9.9-9.89a9.82 9.82 0 0 1 7 2.9 9.83 9.83 0 0 1 2.9 7c0 5.46-4.44 9.9-9.9 9.9Z"/></svg>';
+const esc = v => String(v ?? "").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function card(item){
+ const sold=["sold","vendido","indisponível","reservado"].includes(String(item.status||"").toLowerCase());
+ const photos=Array.isArray(item.photos)?item.photos:[];
+ const statusLabel=sold?"Vendido":(String(item.status||"available").toLowerCase()==="available"?"Disponível":(item.status||"Disponível"));
+ const active=Math.max(0,Math.min(Number(item._activePhoto||0),Math.max(photos.length-1,0)));
+ const photoMarkup=photos.length
+  ? `<button type="button" class="block h-full w-full cursor-zoom-in" data-album-open="${esc(item.id)}" aria-label="Ampliar foto de ${esc(item.title)}"><img src="${esc(photos[active])}" alt="${esc(item.title)} — foto ${active+1}" loading="lazy" decoding="async" class="h-full w-full object-cover"></button>
+     ${photos.length>1?`<button type="button" class="album-control left-2" data-album-prev="${esc(item.id)}" aria-label="Foto anterior">‹</button><button type="button" class="album-control right-2" data-album-next="${esc(item.id)}" aria-label="Próxima foto">›</button><span class="album-counter" data-album-counter="${esc(item.id)}">${active+1} / ${photos.length}</span>`:""}`
+  : `<div class="flex h-full items-center justify-center text-sm text-zinc-400">Adicione uma foto</div>`;
+ const contact=sold
+  ? '<button type="button" disabled aria-disabled="true" class="inline-flex h-10 cursor-not-allowed items-center justify-center rounded-md bg-green-600/75 px-4 text-sm font-medium text-white opacity-80">Vendido</button>'
+  : `<a href="https://wa.me/${sellerPhone}?text=${encodeURIComponent(`Estou interessado no item "${item.title}"`)}" target="_blank" rel="noopener noreferrer" class="inline-flex h-10 items-center gap-2 rounded-md bg-green-600 px-4 text-sm font-medium text-white hover:bg-green-700">${waIcon}Tenho interesse</a>`;
+ return `<article data-album-card="${esc(item.id)}" class="overflow-hidden rounded-xl border border-zinc-200 bg-white soft-shadow">
+  <div class="item-photo">${photoMarkup}<span class="status-tag ${sold?"sold":"available"}">${esc(statusLabel)}</span></div><div class="p-4 sm:p-5">
+   <h3 class="text-base font-semibold tracking-tight">${esc(item.title||"Item sem nome")}</h3>
+   <p class="mt-1.5 min-h-10 text-sm leading-5 text-zinc-600">${esc(item.description||"")}</p>
+   <div class="mt-5 flex items-end justify-between gap-3 border-t border-zinc-100 pt-4">
+    <div><p class="text-xs text-zinc-500">Preço</p><p class="mt-0.5 text-lg font-semibold">${sold?"—":esc(item.price||"Consulte o preço")}</p>
+    ${item.priceInfo&&!sold?`<p class="mt-0.5 text-xs text-zinc-500">${esc(item.priceInfo)}</p>`:""}</div>${contact}
+   </div></div></article>`;
+}
+let activeAlbumItem=null;
+let activeAlbumIndex=0;
+const findMiscItem=id=>miscItems.find(item=>String(item.id)===String(id));
+function updateCardAlbum(item,index){
+ const photos=Array.isArray(item.photos)?item.photos:[];
+ if(!photos.length)return;
+ item._activePhoto=(index+photos.length)%photos.length;
+ const card=document.querySelector(`[data-album-card="${CSS.escape(String(item.id))}"]`);
+ if(!card)return;
+ const image=card.querySelector("[data-album-open] img");
+ if(image){image.src=photos[item._activePhoto];image.alt=`${item.title} — foto ${item._activePhoto+1}`;}
+ const counter=card.querySelector("[data-album-counter]");
+ if(counter)counter.textContent=`${item._activePhoto+1} / ${photos.length}`;
+}
+function showAlbumPhoto(item,index){
+ const photos=Array.isArray(item.photos)?item.photos:[];
+ if(!photos.length)return;
+ activeAlbumItem=item;activeAlbumIndex=(index+photos.length)%photos.length;
+ const lightbox=document.getElementById("photo-lightbox");
+ const image=document.getElementById("lightbox-image");
+ image.src=photos[activeAlbumIndex];image.alt=`${item.title} — foto ${activeAlbumIndex+1}`;
+ document.getElementById("lightbox-counter").textContent=`${activeAlbumIndex+1} / ${photos.length}`;
+ document.getElementById("lightbox-prev").classList.toggle("hidden",photos.length<2);
+ document.getElementById("lightbox-next").classList.toggle("hidden",photos.length<2);
+ lightbox.classList.remove("hidden");lightbox.classList.add("flex");
+ document.getElementById("lightbox-close").focus();
+}
+function closeAlbumPhoto(){
+ const lightbox=document.getElementById("photo-lightbox");
+ lightbox.classList.add("hidden");lightbox.classList.remove("flex");
+ document.getElementById("lightbox-image").src="";activeAlbumItem=null;
+}
+function stepLightbox(direction){
+ if(!activeAlbumItem)return;
+ const photos=activeAlbumItem.photos||[];
+ if(photos.length)showAlbumPhoto(activeAlbumItem,activeAlbumIndex+direction);
+}
+document.getElementById("category-sections").addEventListener("click",event=>{
+ const prev=event.target.closest("[data-album-prev]");
+ const next=event.target.closest("[data-album-next]");
+ const open=event.target.closest("[data-album-open]");
+ if(prev||next){
+  const control=prev||next;
+  const item=findMiscItem(control.dataset.albumPrev||control.dataset.albumNext);
+  if(item)updateCardAlbum(item,Number(item._activePhoto||0)+(prev?-1:1));
+  return;
+ }
+ if(open){
+  const item=findMiscItem(open.closest("[data-album-card]")?.dataset.albumCard);
+  if(item)showAlbumPhoto(item,Number(item._activePhoto||0));
+ }
+});
+document.getElementById("lightbox-close").addEventListener("click",closeAlbumPhoto);
+document.getElementById("photo-lightbox").addEventListener("click",event=>{if(event.target.id==="photo-lightbox")closeAlbumPhoto();});
+document.getElementById("lightbox-prev").addEventListener("click",()=>stepLightbox(-1));
+document.getElementById("lightbox-next").addEventListener("click",()=>stepLightbox(1));
+document.addEventListener("keydown",event=>{
+ if(!activeAlbumItem)return;
+ if(event.key==="Escape")closeAlbumPhoto();
+ if(event.key==="ArrowLeft")stepLightbox(-1);
+ if(event.key==="ArrowRight")stepLightbox(1);
+});
+
+function render(){
+ const selected=document.getElementById("category-filter").value;
+ const filtered=miscItems.filter(x=>selected==="all"||(x.category||"Outros")===selected);
+ const groups=filtered.reduce((acc,item)=>{const c=item.category||"Outros";(acc[c]??=[]).push(item);return acc;},{});
+ document.getElementById("category-sections").innerHTML=Object.entries(groups).sort(([a],[b])=>a.localeCompare(b,"pt-BR")).map(([category,items])=>
+  `<section><div class="mb-4 flex items-center justify-between"><h2 class="text-lg font-semibold tracking-tight">${esc(category)}</h2><span class="text-xs text-zinc-400">${items.length} ${items.length===1?"item":"itens"}</span></div><div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">${items.map(card).join("")}</div></section>`).join("");
+ document.getElementById("empty-state").classList.toggle("hidden",filtered.length>0);
+}
+const categories=[...new Set(miscItems.map(x=>x.category||"Outros"))].sort((a,b)=>a.localeCompare(b,"pt-BR"));
+document.getElementById("category-filter").innerHTML='<option value="all">Todas</option>'+categories.map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join("");
+document.getElementById("category-filter").addEventListener("change",render);
+render();
+</script>
+</body></html>
